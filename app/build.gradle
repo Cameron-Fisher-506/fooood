@@ -3,6 +3,9 @@ plugins {
     id 'kotlin-android'
 }
 
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
@@ -32,6 +35,9 @@ android {
     }
 }
 
+def retrofitVersion = '2.9.0'
+def roomVersion = '2.2.6'
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -42,4 +48,14 @@ dependencies {
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+
+    //Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-gson:${retrofitVersion}"
+
+    //Room Database components
+    implementation "androidx.room:room-runtime:${roomVersion}"
+    kapt "androidx.room:room-compiler:${roomVersion}"
+    implementation "androidx.room:room-ktx:${roomVersion}"
+    androidTestImplementation "androidx.room:room-testing:${roomVersion}"
 }
