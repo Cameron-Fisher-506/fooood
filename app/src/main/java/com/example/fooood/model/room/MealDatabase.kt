@@ -1,14 +1,21 @@
 package com.example.fooood.model.room
 
 import android.content.Context
+import androidx.lifecycle.liveData
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.fooood.model.models.Book
 import com.example.fooood.model.models.Meal
+import com.example.fooood.utils.Resource
+import kotlinx.coroutines.Dispatchers
 
 @Database(entities = [Book::class, Meal::class], version = 1, exportSchema = false)
 abstract class MealDatabase : RoomDatabase() {
+
+    abstract fun bookDao(): IBookDao
+    abstract fun mealDao(): IMealDao
+
     companion object {
         @Volatile
         private var INSTANCE: MealDatabase? = null
@@ -29,5 +36,17 @@ abstract class MealDatabase : RoomDatabase() {
                 }
             }
         }
+
+        inline fun <T> getResource(crossinline daoCall: suspend () -> T?) =
+            liveData<Resource<T>>(Dispatchers.IO) {
+                emit(Resource.loading())
+
+                val value = daoCall.invoke()
+                if (value != null) {
+                    emit(Resource.success(value))
+                } else {
+                    emit(Resource.error("Not cached."))
+                }
+            }
     }
 }

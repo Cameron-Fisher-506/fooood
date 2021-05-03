@@ -1,6 +1,7 @@
 package com.example.fooood.model.room
 
 import androidx.room.*
+import androidx.sqlite.db.SupportSQLiteQuery
 
 @Dao
 interface IBaseDao<T> {
@@ -21,4 +22,7 @@ interface IBaseDao<T> {
 
     @Delete
     suspend fun <T> delete(entities: List<T>)
+
+    @RawQuery
+    suspend fun <T> specialQuery(query: SupportSQLiteQuery): List<T>?
 }

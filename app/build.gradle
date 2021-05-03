@@ -37,6 +37,7 @@ android {
 
 def retrofitVersion = '2.9.0'
 def roomVersion = '2.2.6'
+def lifecycleExtensionsVersion = '1.1.1'
 
 dependencies {
 
@@ -58,4 +59,9 @@ dependencies {
     kapt "androidx.room:room-compiler:${roomVersion}"
     implementation "androidx.room:room-ktx:${roomVersion}"
     androidTestImplementation "androidx.room:room-testing:${roomVersion}"
+
+    //Lifecycle components
+    implementation "android.arch.lifecycle:extensions:${lifecycleExtensionsVersion}"
+    implementation 'androidx.lifecycle:lifecycle-livedata-ktx:2.3.0'
+    implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.0'
 }
