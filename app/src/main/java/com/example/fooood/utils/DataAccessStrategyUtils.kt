@@ -42,7 +42,26 @@ object DataAccessStrategyUtils {
             }
 
             if(result != null && result.isNotEmpty()) {
+                var mustUpdate = false
+                for(i in result.indices) {
+                    if(DateTimeUtils.differenceInMinutes(result[i].timestamp, DateTimeUtils.getCurrentDateTime()) > DateTimeUtils.ONE_MINUTE) {
+                        mustUpdate = true
+                        break
+                    }
+                }
 
+                if (mustUpdate) {
+                    val response  = wsCall.invoke()
+                    if(response.status == Status.SUCCESS && response.data != null) {
+                        if (response.data is BookWithMeals) {
+                            emit(Resource.success(response.data.meals))
+                        }
+                    } else {
+                        emit(Resource.error("No Data Found."))
+                    }
+                } else {
+                    emit(Resource.success(result))
+                }
             } else {
                 val response = wsCall.invoke()
                 if (response.status == Status.SUCCESS && response.data != null) {

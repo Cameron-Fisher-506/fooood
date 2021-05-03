@@ -9,7 +9,7 @@ object DateTimeUtils {
     const val DASHED_PATTERN_YYYY_MM_DD_HH_MM_SS = "yyyy-MM-dd HH:mm:ss"
     const val ONE_MINUTE = 1
 
-    fun getCurrentDateTime(format: String): String {
+    fun getCurrentDateTime(format: String = DASHED_PATTERN_YYYY_MM_DD_HH_MM_SS): String {
         val simpleDateFormat = SimpleDateFormat(format, Locale.ENGLISH)
         return simpleDateFormat.format(Date())
     }
