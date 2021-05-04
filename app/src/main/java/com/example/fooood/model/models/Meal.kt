@@ -2,12 +2,14 @@ package com.example.fooood.model.models
 
 import androidx.room.Entity
 import androidx.room.Index
+import androidx.room.PrimaryKey
 import com.example.fooood.utils.DateTimeUtils
 import com.google.gson.annotations.SerializedName
 
 @Entity(indices = [Index(value = ["id"], unique = true)])
 class Meal : BaseModel() {
     @SerializedName("idMeal")
+    @PrimaryKey
     var id: String = ""
 
     @SerializedName("strMeal")
