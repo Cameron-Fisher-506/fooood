@@ -9,7 +9,7 @@ import com.google.gson.annotations.SerializedName
 @Entity(indices = [Index(value = ["id"], unique = true)])
 class Meal : BaseModel() {
     @SerializedName("idMeal")
-    @PrimaryKey
+    @PrimaryKey(autoGenerate = false)
     var id: String = ""
 
     @SerializedName("strMeal")
