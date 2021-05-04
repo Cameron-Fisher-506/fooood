@@ -11,13 +11,13 @@ suspend fun <T> IBaseDao<T>.upsert(entities: List<T>, baseDao: IBaseDao<T>) {
     val results = baseDao.insert(entities)
     val updateList: MutableList<T> = mutableListOf()
 
-    for(i in results.indices) {
-        if(results[i] == -1L) {
+    for (i in results.indices) {
+        if (results[i] == -1L) {
             updateList.add(entities[i])
         }
     }
 
-    if(updateList.isNotEmpty()) {
+    if (updateList.isNotEmpty()) {
         baseDao.update(updateList)
     }
 }
