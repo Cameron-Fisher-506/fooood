@@ -5,7 +5,7 @@ import androidx.room.Query
 import com.example.fooood.model.models.Meal
 
 @Dao
-interface IMealDao : IBaseDao<IMealDao> {
+interface IMealDao : IBaseDao<Meal> {
 
     @Query("SELECT * FROM meal WHERE meal LIKE ('%'|:value|'%')")
     suspend fun getAllByValue(value: String): List<Meal>?
