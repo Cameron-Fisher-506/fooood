@@ -4,12 +4,11 @@ import androidx.room.Embedded
 import androidx.room.Relation
 import com.google.gson.annotations.SerializedName
 
-class BookWithMeals : BaseModel() {
+data class BookWithMeals(
     @Embedded
-    val book: Book = Book()
+    val book: Book = Book(),
 
     @Relation(parentColumn = "id", entityColumn = "bookId")
     @SerializedName("meals")
-    lateinit var meals: List<Meal>
-
+    var meals: List<Meal>) : BaseModel() {
 }
