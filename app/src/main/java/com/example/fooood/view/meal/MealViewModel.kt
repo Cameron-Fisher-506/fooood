@@ -1,4 +1,4 @@
-package com.example.fooood.view
+package com.example.fooood.view.meal
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
@@ -16,7 +16,7 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
         BookRepository(application)
     }
 
-    fun getRandomMeals(update: Boolean) {
-
+    fun getMealsByCategory(category: String) {
+        this.randomMealsLiveData = this.mealRepository.getMealsByCategory(category)
     }
 }

@@ -1,5 +1,6 @@
 package com.example.fooood.model.service
 
+import com.example.fooood.model.models.BookWithMeals
 import com.example.fooood.model.models.Meal
 import retrofit2.Response
 import retrofit2.http.GET
@@ -14,4 +15,7 @@ interface IFoooodApi {
 
     @GET("random.php")
     suspend fun getRandomMeal(): Response<Meal>
+
+    @GET("filter.php")
+    suspend fun getMealsByCategory(@Query("c") c: String): Response<BookWithMeals>
 }
