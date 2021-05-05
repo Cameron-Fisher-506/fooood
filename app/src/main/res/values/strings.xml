@@ -5,4 +5,7 @@
     <string name="home">Home</string>
     <string name="search">Search</string>
     <string name="menu">Menu</string>
+
+    //Common
+    <string name="dash">--</string>
 </resources>
