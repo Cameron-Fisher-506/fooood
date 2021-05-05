@@ -67,6 +67,7 @@ object DataAccessStrategyUtils {
                 val response = wsCall.invoke()
                 if (response.status == Status.SUCCESS && response.data != null) {
                     if(response.data is BookWithMeals) {
+                        mealDao.upsert(response.data.meals, mealDao)
                         emit(Resource.success(response.data.meals))
                     }
                 } else {

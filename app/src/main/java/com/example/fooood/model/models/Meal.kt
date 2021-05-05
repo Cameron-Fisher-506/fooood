@@ -5,9 +5,10 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 import com.example.fooood.utils.DateTimeUtils
 import com.google.gson.annotations.SerializedName
+import java.io.Serializable
 
 @Entity(indices = [Index(value = ["id"], unique = true)])
-class Meal : BaseModel() {
+class Meal : BaseModel(), Serializable {
     @SerializedName("idMeal")
     @PrimaryKey(autoGenerate = false)
     var id: String = ""

@@ -7,5 +7,20 @@
     <fragment
         android:id="@+id/mealListFragment"
         android:name="com.example.fooood.view.meal.MealListFragment"
-        android:label="MealListFragment" />
+        android:label="@string/home" >
+        <action
+            android:id="@+id/action_mealListFragment_to_mealDetailsFragment"
+            app:destination="@id/mealDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailsFragment"
+        android:name="com.example.fooood.view.meal.MealDetailsFragment"
+        android:label="Details" >
+        <action
+            android:id="@+id/action_mealDetailsFragment_to_mealListFragment"
+            app:destination="@id/mealListFragment" />
+        <argument
+            android:name="meal"
+            app:argType="com.example.fooood.model.models.Meal" />
+    </fragment>
 </navigation>

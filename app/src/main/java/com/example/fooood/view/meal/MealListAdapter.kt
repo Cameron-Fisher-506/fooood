@@ -2,6 +2,8 @@ package com.example.fooood.view.meal
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
+import androidx.navigation.ui.NavigationUI
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooood.databinding.MealItemBinding
@@ -24,6 +26,11 @@ class MealListAdapter(private val mealList: ArrayList<Meal>) : RecyclerView.Adap
             .into(holder.binding.mealImageView)
 
         holder.binding.foodNameTextView.text = mealList[position].meal
+
+        holder.binding.mealConstraintLayout.setOnClickListener {
+            val action = MealListFragmentDirections.actionMealListFragmentToMealDetailsFragment(mealList[position])
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 
     override fun getItemCount(): Int = mealList.size
