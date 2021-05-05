@@ -8,4 +8,7 @@
 
     //Common
     <string name="dash">--</string>
+
+    //Home
+    <string name="no_data_found">No data found.</string>
 </resources>

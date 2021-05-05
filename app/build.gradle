@@ -45,6 +45,7 @@ def retrofitVersion = '2.9.0'
 def roomVersion = '2.2.6'
 def lifecycleExtensionsVersion = '1.1.1'
 def navVersion = '2.1.0-alpha05'
+def glideVersion = '4.9.0'
 
 dependencies {
 
@@ -77,4 +78,10 @@ dependencies {
     //navigation
     implementation "androidx.navigation:navigation-fragment-ktx:${navVersion}"
     implementation "androidx.navigation:navigation-ui-ktx:${navVersion}"
+
+    //glide
+    implementation "com.github.bumptech.glide:glide:${glideVersion}"
+
+    //swipe refresh layout
+    implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.1.0"
 }
