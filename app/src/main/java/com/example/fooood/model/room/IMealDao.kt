@@ -10,6 +10,9 @@ interface IMealDao : IBaseDao<Meal> {
     @Query("SELECT * FROM meal WHERE meal LIKE ('%' || :value || '%')")
     suspend fun getAllByValue(value: String): List<Meal>?
 
+    @Query("SELECT * FROM meal WHERE id = :id")
+    suspend fun getById(id: String): List<Meal>?
+
     @Query("SELECT * FROM meal ORDER BY RANDOM() LIMIT 100")
-    suspend fun getRandomMeals(): List<Meal>?
+    suspend fun getRandom(): List<Meal>?
 }

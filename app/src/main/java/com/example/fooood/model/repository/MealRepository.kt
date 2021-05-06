@@ -16,9 +16,15 @@ class MealRepository(application: Application) {
     private val mealDao: IMealDao = MealDatabase.getDatabase(application).mealDao()
 
     private val categoryLiveData by lazy { MutableLiveData<String>() }
+    private val idLiveData by lazy { MutableLiveData<String>() }
 
     public fun getMealsByCategory(category: String): LiveData<Resource<List<Meal>>> {
         categoryLiveData.value = category
         return Transformations.switchMap(categoryLiveData) {DataAccessStrategyUtils.synchronizedCache(mealDao, null) {foooodService.getMealsByCategory(category)} }
+    }
+
+    public fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
+        idLiveData.value = id
+        return Transformations.switchMap(idLiveData) { DataAccessStrategyUtils.synchronizedCache(mealDao, id) {foooodService.getMealById(id)} }
     }
 }

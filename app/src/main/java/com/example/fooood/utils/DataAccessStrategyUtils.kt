@@ -19,7 +19,7 @@ object DataAccessStrategyUtils {
                 emit(Resource.success(result))
             } else {
                 val response = wsCall.invoke()
-                if(response.status == Status.SUCCESS && response.data != null) {
+                if (response.status == Status.SUCCESS && response.data != null) {
                     if (response.data is BookWithMeals) {
                         mealDao.insert(response.data.meals)
                         emit(Resource.success(response.data.meals))
@@ -30,32 +30,41 @@ object DataAccessStrategyUtils {
             }
         }
 
-    inline fun <T> synchronizedCache(mealDao: IMealDao, value: String?, crossinline wsCall: suspend () -> Resource<T>) =
+    inline fun <T> synchronizedCache(mealDao: IMealDao, id: String?, crossinline wsCall: suspend () -> Resource<T>) =
         liveData<Resource<List<Meal>>>(Dispatchers.IO) {
             emit(Resource.loading())
 
             var result: List<Meal>? = null
-            result = if (value == null) {
-                mealDao.getRandomMeals()
+            result = if (id == null) {
+                mealDao.getRandom()
             } else {
-                mealDao.getAllByValue(value)
+                mealDao.getById(id)
             }
 
-            if(result != null && result.isNotEmpty()) {
+            if (result != null && result.isNotEmpty()) {
                 var mustUpdate = false
-                for(i in result.indices) {
-                    if(DateTimeUtils.differenceInMinutes(result[i].timestamp, DateTimeUtils.getCurrentDateTime()) > DateTimeUtils.ONE_MINUTE) {
+                for (i in result.indices) {
+                    if (DateTimeUtils.differenceInMinutes(result[i].timestamp, DateTimeUtils.getCurrentDateTime()) > DateTimeUtils.ONE_MINUTE) {
                         mustUpdate = true
                         break
                     }
                 }
 
                 if (mustUpdate) {
-                    val response  = wsCall.invoke()
-                    if(response.status == Status.SUCCESS && response.data != null) {
-                        if (response.data is BookWithMeals) {
-                            mealDao.upsert(response.data.meals, mealDao)
-                            emit(Resource.success(response.data.meals))
+                    val response = wsCall.invoke()
+                    if (response.status == Status.SUCCESS && response.data != null) {
+                        when (response.data) {
+                            is BookWithMeals -> {
+                                mealDao.upsert(response.data.meals, mealDao)
+                                emit(Resource.success(response.data.meals))
+                            }
+                            is Meal -> {
+                                mealDao.upsert(response.data, mealDao)
+
+                                val meals = listOf(response.data)
+                                emit(Resource.success(meals))
+                            }
+                            else -> { emit(Resource.error("No data found.")) }
                         }
                     } else {
                         emit(Resource.error("No Data Found."))
@@ -66,9 +75,18 @@ object DataAccessStrategyUtils {
             } else {
                 val response = wsCall.invoke()
                 if (response.status == Status.SUCCESS && response.data != null) {
-                    if(response.data is BookWithMeals) {
-                        mealDao.upsert(response.data.meals, mealDao)
-                        emit(Resource.success(response.data.meals))
+                    when (response.data) {
+                        is BookWithMeals -> {
+                            mealDao.upsert(response.data.meals, mealDao)
+                            emit(Resource.success(response.data.meals))
+                        }
+                        is Meal -> {
+                            mealDao.upsert(response.data, mealDao)
+
+                            val meals = listOf(response.data)
+                            emit(Resource.success(meals))
+                        }
+                        else -> { emit(Resource.error("No data found.")) }
                     }
                 } else {
                     emit(Resource.error("No data found."))

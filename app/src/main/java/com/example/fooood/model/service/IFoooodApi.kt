@@ -18,4 +18,7 @@ interface IFoooodApi {
 
     @GET("filter.php")
     suspend fun getMealsByCategory(@Query("c") c: String): Response<BookWithMeals>
+
+    @GET("lookup.php")
+    suspend fun getMealById(@Query("i") i: String): Response<BookWithMeals>
 }

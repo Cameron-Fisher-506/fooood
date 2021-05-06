@@ -10,6 +10,8 @@ import com.example.fooood.utils.Resource
 
 class MealViewModel(application: Application): AndroidViewModel(application) {
     lateinit var randomMealsLiveData: LiveData<Resource<List<Meal>>>
+    lateinit var mealLiveData: LiveData<Resource<List<Meal>>>
+
     private val mealRepository = MealRepository(application)
 
     init {
@@ -18,5 +20,9 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
 
     fun getMealsByCategory(category: String) {
         this.randomMealsLiveData = this.mealRepository.getMealsByCategory(category)
+    }
+
+    fun getMealById(id: String) {
+        mealLiveData = mealRepository.getMealById(id)
     }
 }
