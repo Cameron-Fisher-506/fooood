@@ -17,155 +17,155 @@ class Meal : BaseModel(), Serializable {
     var meal: String = ""
 
     @SerializedName("strDrinkAlternate")
-    var drinkAlternate: String = ""
+    var drinkAlternate: String? = ""
 
     @SerializedName("strCategory")
-    var category: String = ""
+    var category: String? = ""
 
     @SerializedName("strArea")
-    var area: String = ""
+    var area: String? = ""
 
     @SerializedName("strInstructions")
-    var instructions: String = ""
+    var instructions: String? = ""
 
     @SerializedName("strMealThumb")
-    var mealThumb: String = ""
+    var mealThumb: String? = ""
 
     @SerializedName("strTags")
-    var tags: String = ""
+    var tags: String? = ""
 
     @SerializedName("strYoutube")
-    var youTube: String = ""
+    var youTube: String? = ""
 
     @SerializedName("strIngredient1")
-    var ingredientOne: String = ""
+    var ingredientOne: String? = ""
 
     @SerializedName("strIngredient2")
-    var ingredientTwo: String = ""
+    var ingredientTwo: String? = ""
 
     @SerializedName("strIngredient3")
-    var ingredientThree: String = ""
+    var ingredientThree: String? = ""
 
     @SerializedName("strIngredient4")
-    var ingredientFour: String = ""
+    var ingredientFour: String? = ""
 
     @SerializedName("strIngredient5")
-    var ingredientFive: String = ""
+    var ingredientFive: String? = ""
 
     @SerializedName("strIngredient6")
-    var ingredientSix: String = ""
+    var ingredientSix: String? = ""
 
     @SerializedName("strIngredient7")
-    var ingredientSeven: String = ""
+    var ingredientSeven: String? = ""
 
     @SerializedName("strIngredient8")
-    var ingredientEight: String = ""
+    var ingredientEight: String? = ""
 
     @SerializedName("strIngredient9")
-    var ingredientNine: String = ""
+    var ingredientNine: String? = ""
 
     @SerializedName("strIngredient10")
-    var ingredientTen: String = ""
+    var ingredientTen: String? = ""
 
     @SerializedName("strIngredient11")
-    var ingredientEleven: String = ""
+    var ingredientEleven: String? = ""
 
     @SerializedName("strIngredient12")
-    var ingredientTwelve: String = ""
+    var ingredientTwelve: String? = ""
 
     @SerializedName("strIngredient13")
-    var ingredientThirteen: String = ""
+    var ingredientThirteen: String? = ""
 
     @SerializedName("strIngredient14")
-    var ingredientFourteen: String = ""
+    var ingredientFourteen: String? = ""
 
     @SerializedName("strIngredient15")
-    var ingredientFifteen: String = ""
+    var ingredientFifteen: String? = ""
 
     @SerializedName("strIngredient16")
-    var ingredientSixteen: String = ""
+    var ingredientSixteen: String? = ""
 
     @SerializedName("strIngredient17")
-    var ingredientSeventeen: String = ""
+    var ingredientSeventeen: String? = ""
 
     @SerializedName("strIngredient18")
-    var ingredientEighteen: String = ""
+    var ingredientEighteen: String? = ""
 
     @SerializedName("strIngredient19")
-    var ingredientNineteen: String = ""
+    var ingredientNineteen: String? = ""
 
     @SerializedName("strIngredient20")
-    var ingredientTwenty: String = ""
+    var ingredientTwenty: String? = ""
 
     @SerializedName("strMeasure1")
-    var measurementOne: String = ""
+    var measurementOne: String? = ""
 
     @SerializedName("strMeasure2")
-    var measurementTwo: String = ""
+    var measurementTwo: String? = ""
 
     @SerializedName("strMeasure3")
-    var measurementThree: String = ""
+    var measurementThree: String? = ""
 
     @SerializedName("strMeasure4")
-    var measurementFour: String = ""
+    var measurementFour: String? = ""
 
     @SerializedName("strMeasure5")
-    var measurementFive: String = ""
+    var measurementFive: String? = ""
 
     @SerializedName("strMeasure6")
-    var measurementSix: String = ""
+    var measurementSix: String? = ""
 
     @SerializedName("strMeasure7")
-    var measurementSeven: String = ""
+    var measurementSeven: String? = ""
 
     @SerializedName("strMeasure8")
-    var measurementEight: String = ""
+    var measurementEight: String? = ""
 
     @SerializedName("strMeasure9")
-    var measurementNine: String = ""
+    var measurementNine: String? = ""
 
     @SerializedName("strMeasure10")
-    var measurementTen: String = ""
+    var measurementTen: String? = ""
 
     @SerializedName("strMeasure11")
-    var measurementEleven: String = ""
+    var measurementEleven: String? = ""
 
     @SerializedName("strMeasure12")
-    var measurementTwelve: String = ""
+    var measurementTwelve: String? = ""
 
     @SerializedName("strMeasure13")
-    var measurementThirteen: String = ""
+    var measurementThirteen: String? = ""
 
     @SerializedName("strMeasure14")
-    var measurementFourteen: String = ""
+    var measurementFourteen: String? = ""
 
     @SerializedName("strMeasure15")
-    var measurementFifteen: String = ""
+    var measurementFifteen: String? = ""
 
     @SerializedName("strMeasure16")
-    var measurementSixteen: String = ""
+    var measurementSixteen: String? = ""
 
     @SerializedName("strMeasure17")
-    var measurementSeventeen: String = ""
+    var measurementSeventeen: String? = ""
 
     @SerializedName("strMeasure18")
-    var measurementEighteen: String = ""
+    var measurementEighteen: String? = ""
 
     @SerializedName("strMeasure19")
-    var measurementNineteen: String = ""
+    var measurementNineteen: String? = ""
 
     @SerializedName("strMeasure20")
-    var measurementTwenty: String = ""
+    var measurementTwenty: String? = ""
 
     @SerializedName("strSource")
-    var source: String = ""
+    var source: String? = ""
 
     @SerializedName("strImageSource")
-    var imageSource: String = ""
+    var imageSource: String? = ""
 
     @SerializedName("strCreativeCommonsConfirmed")
-    var creativeCommonsConfirmed: String = ""
-    var dateModified: String = ""
+    var creativeCommonsConfirmed: String? = ""
+    var dateModified: String? = ""
     var bookId: Int = 1
     var timestamp: String = DateTimeUtils.getCurrentDateTime()
 }

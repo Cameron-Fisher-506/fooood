@@ -2,6 +2,7 @@
 <resources>
 
     <!--Spaces-->
+    <dimen name="tiny_space">4dp</dimen>
     <dimen name="small_space">16dp</dimen>
     <dimen name="medium_space">18dp</dimen>
     <dimen name="large_space">20dp</dimen>
