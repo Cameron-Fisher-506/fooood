@@ -23,7 +23,6 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.binding = MealDetailsFragmentBinding.bind(view)
-
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
 
         arguments?.let {
@@ -91,8 +90,13 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
         }
     }
 
-    private fun buildIngredientsListItem(ingredient: String?, measurement: String?): String =
-        if (ingredient != null && ingredient.isNotEmpty() && measurement != null && measurement.isNotEmpty()) { "${TextUtils.BULLET_POINT} $ingredient ($measurement)<br/>" } else ""
+    private fun buildIngredientsListItem(ingredient: String?, measurement: String?): String {
+        return if (ingredient != null && ingredient.isNotEmpty() && measurement != null && measurement.isNotEmpty()) {
+            "${TextUtils.BULLET_POINT} $ingredient ($measurement)<br/>"
+        } else {
+            ""
+        }
+    }
 
     private fun wireUI(meal: Meal) {
         with (this.binding) {
