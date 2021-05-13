@@ -1,12 +1,20 @@
 package com.example.fooood.view.meal
 
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
+import android.text.method.ScrollingMovementMethod
 import android.view.View
+import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.palette.graphics.Palette
 import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
 import com.example.fooood.R
 import com.example.fooood.databinding.MealDetailsFragmentBinding
 import com.example.fooood.enum.Status
@@ -18,7 +26,6 @@ import java.lang.StringBuilder
 class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     private lateinit var binding: MealDetailsFragmentBinding
     private lateinit var mealViewModel: MealViewModel
-
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -60,6 +67,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             mealTextView.visibility = View.VISIBLE
             ingredientsOneTextView.visibility = View.VISIBLE
             ingredientsTwoTextView.visibility = View.VISIBLE
+            instructionsTextView.visibility = View.VISIBLE
             mealProgressBar.visibility = View.GONE
             mealErrorTextView.visibility = View.GONE
         }
@@ -71,6 +79,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             mealImageView.visibility = View.GONE
             ingredientsOneTextView.visibility = View.GONE
             ingredientsTwoTextView.visibility = View.GONE
+            instructionsTextView.visibility = View.GONE
         }
     }
 
@@ -105,6 +114,23 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
                 .load(meal.mealThumb)
                 .into(mealImageView)
 
+            Glide.with(this.root)
+                .asBitmap()
+                .load(meal.mealThumb)
+                .into(object: CustomTarget<Bitmap>() {
+                    override fun onLoadCleared(placeholder: Drawable?) {
+
+                    }
+
+                    override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                        Palette.from(resource)
+                            .generate() { palette ->
+                                val color = palette?.lightMutedSwatch?.rgb ?: 0
+                                mealMaterialCardView.setBackgroundColor(color)
+                            }
+                    }
+                })
+
             mealTextView.text = meal.meal
 
             val ingredientsListOne = StringBuilder()
@@ -132,6 +158,8 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             ingredientsListTwo.append(buildIngredientsListItem(meal.ingredientNineteen, meal.measurementNineteen))
             ingredientsListTwo.append(buildIngredientsListItem(meal.ingredientTwenty, meal.measurementTwenty))
             ingredientsTwoTextView.text = Html.fromHtml(ingredientsListTwo.toString())
+
+            instructionsTextView.text = meal.instructions
         }
     }
 }
