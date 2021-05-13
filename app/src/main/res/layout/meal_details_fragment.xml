@@ -9,7 +9,8 @@
         android:id="@+id/mealMaterialCardView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/tiny_space">
+        android:layout_margin="@dimen/tiny_space"
+        app:cardElevation="@dimen/small_space">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
