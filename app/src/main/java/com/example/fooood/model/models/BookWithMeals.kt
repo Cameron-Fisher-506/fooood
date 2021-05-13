@@ -10,5 +10,5 @@ data class BookWithMeals(
 
     @Relation(parentColumn = "id", entityColumn = "bookId")
     @SerializedName("meals")
-    var meals: List<Meal>) : BaseModel() {
+    var meals: List<Meal>?) : BaseModel() {
 }

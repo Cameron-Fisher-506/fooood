@@ -21,11 +21,16 @@ object DataAccessStrategyUtils {
                 val response = wsCall.invoke()
                 if (response.status == Status.SUCCESS && response.data != null) {
                     if (response.data is BookWithMeals) {
-                        mealDao.insert(response.data.meals)
-                        emit(Resource.success(response.data.meals))
+                        val meals = response.data.meals
+                        if (meals != null) {
+                            mealDao.insert(meals)
+                            emit(Resource.success(meals))
+                        } else {
+                            emit(Resource.error("No meals found."))
+                        }
                     }
                 } else {
-                    emit(Resource.error("No"))
+                    emit(Resource.error("No meals found."))
                 }
             }
         }
@@ -55,8 +60,13 @@ object DataAccessStrategyUtils {
                     if (response.status == Status.SUCCESS && response.data != null) {
                         when (response.data) {
                             is BookWithMeals -> {
-                                mealDao.upsert(response.data.meals, mealDao)
-                                emit(Resource.success(response.data.meals))
+                                val meals = response.data.meals
+                                if (meals != null) {
+                                    mealDao.upsert(meals, mealDao)
+                                    emit(Resource.success(meals))
+                                } else {
+                                    emit(Resource.error("No meals found."))
+                                }
                             }
                             is Meal -> {
                                 mealDao.upsert(response.data, mealDao)
@@ -77,8 +87,13 @@ object DataAccessStrategyUtils {
                 if (response.status == Status.SUCCESS && response.data != null) {
                     when (response.data) {
                         is BookWithMeals -> {
-                            mealDao.upsert(response.data.meals, mealDao)
-                            emit(Resource.success(response.data.meals))
+                            val meals = response.data.meals
+                            if (meals != null) {
+                                mealDao.upsert(meals, mealDao)
+                                emit(Resource.success(meals))
+                            } else {
+                                emit(Resource.error("No meals found."))
+                            }
                         }
                         is Meal -> {
                             mealDao.upsert(response.data, mealDao)
