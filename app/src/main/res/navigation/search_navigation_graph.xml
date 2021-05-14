@@ -1,5 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/search_navigation_graph">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/search_navigation_graph"
+    app:startDestination="@id/searchListFragment">
 
+    <fragment
+        android:id="@+id/searchListFragment"
+        android:name="com.example.fooood.view.search.SearchListFragment"
+        android:label="SearchListFragment" >
+        <action
+            android:id="@+id/action_searchListFragment_to_mealDetailsFragment2"
+            app:destination="@id/mealDetailsFragment2" />
+    </fragment>
+    <fragment
+        android:id="@+id/mealDetailsFragment2"
+        android:name="com.example.fooood.view.meal.MealDetailsFragment"
+        android:label="MealDetailsFragment" >
+        <action
+            android:id="@+id/action_mealDetailsFragment2_to_searchListFragment"
+            app:destination="@id/searchListFragment" />
+        <argument
+            android:name="meal"
+            app:argType="com.example.fooood.model.models.Meal" />
+    </fragment>
 </navigation>
