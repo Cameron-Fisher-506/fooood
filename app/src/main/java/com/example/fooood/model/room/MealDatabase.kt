@@ -6,15 +6,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.fooood.model.models.Book
+import com.example.fooood.model.models.Favourite
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 import kotlinx.coroutines.Dispatchers
 
-@Database(entities = [Book::class, Meal::class], version = 1, exportSchema = false)
+@Database(entities = [Book::class, Meal::class, Favourite::class], version = 1, exportSchema = false)
 abstract class MealDatabase : RoomDatabase() {
 
     abstract fun bookDao(): IBookDao
     abstract fun mealDao(): IMealDao
+    abstract fun favouriteDao(): IFavouriteDao
 
     companion object {
         @Volatile
