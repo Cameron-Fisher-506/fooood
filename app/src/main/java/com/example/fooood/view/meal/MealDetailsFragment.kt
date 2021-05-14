@@ -1,13 +1,10 @@
 package com.example.fooood.view.meal
 
 import android.graphics.Bitmap
-import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.text.Html
-import android.text.method.ScrollingMovementMethod
 import android.view.View
-import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -23,8 +20,10 @@ import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 import com.example.fooood.utils.TextUtils
 import com.example.fooood.view.menu.Favourites.FavouriteViewModel
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.meal_details_fragment.*
-import java.lang.StringBuilder
+
 
 class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     private lateinit var binding: MealDetailsFragmentBinding
@@ -84,7 +83,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     }
 
     private fun displayMealDetails() {
-        with (this.binding) {
+        with(this.binding) {
             mealImageView.visibility = View.VISIBLE
             mealTextView.visibility = View.VISIBLE
             ingredientsOneTextView.visibility = View.VISIBLE
@@ -97,7 +96,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     }
 
     private fun hideMealDetails() {
-        with (this.binding) {
+        with(this.binding) {
             mealTextView.visibility = View.GONE
             mealImageView.visibility = View.GONE
             ingredientsOneTextView.visibility = View.GONE
@@ -109,7 +108,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
 
     private fun displayMealErrorTextView() {
         hideMealDetails()
-        with (this.binding) {
+        with(this.binding) {
             mealErrorTextView.visibility = View.VISIBLE
             mealProgressBar.visibility = View.GONE
         }
@@ -117,7 +116,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
 
     private fun displayMealProgressBar() {
         hideMealDetails()
-        with (this.binding) {
+        with(this.binding) {
             mealErrorTextView.visibility = View.GONE
             mealProgressBar.visibility = View.VISIBLE
         }
@@ -132,7 +131,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     }
 
     private fun wireUI(meal: Meal) {
-        with (this.binding) {
+        with(this.binding) {
             Glide.with(this.root)
                 .asBitmap()
                 .load(meal.mealThumb)
@@ -252,6 +251,14 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
                     favouriteViewModel.findById(favourite.id)
                 }
             }
+
+            lifecycle.addObserver(youtubePlayerView)
+            youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
+                override fun onReady(youTubePlayer: YouTubePlayer) {
+                    val videoId = meal.youTube?.split("v=")?.get(1) ?: ""
+                    youTubePlayer.loadVideo(videoId, 0f)
+                }
+            })
         }
     }
 }
