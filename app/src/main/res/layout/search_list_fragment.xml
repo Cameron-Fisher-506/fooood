@@ -33,7 +33,7 @@
         style="@style/title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/loading_meals_failed_please_try_again_later"
+        android:text="@string/no_meals_found"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

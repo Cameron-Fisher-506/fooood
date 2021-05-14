@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 interface IFoooodApi {
     @GET("search.php")
-    suspend fun getByName(@Query("s") s: String): Response<Meal>
+    suspend fun getMealsByName(@Query("s") s: String): Response<BookWithMeals>
 
     @GET("search.php")
     suspend fun getByFirstLetter(@Query("f") f: String): Response<Meal>

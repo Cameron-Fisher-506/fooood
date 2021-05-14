@@ -2,6 +2,7 @@ package com.example.fooood.view.search
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooood.databinding.MealItemBinding
@@ -26,7 +27,8 @@ class SearchListAdapter(private val meals: ArrayList<Meal>) :
         holder.binding.foodNameTextView.text = meals[position].meal
 
         holder.binding.mealConstraintLayout.setOnClickListener {
-
+            val action = SearchListFragmentDirections.actionSearchListFragmentToMealDetailsFragment2(meals[position])
+            Navigation.findNavController(it).navigate(action)
         }
     }
 

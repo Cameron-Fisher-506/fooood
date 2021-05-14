@@ -17,6 +17,7 @@ class MealRepository(application: Application) {
 
     private val categoryLiveData by lazy { MutableLiveData<String>() }
     private val idLiveData by lazy { MutableLiveData<String>() }
+    private val nameLiveData by lazy { MutableLiveData<String>() }
 
     fun getMealsByCategory(category: String): LiveData<Resource<List<Meal>>> {
         categoryLiveData.value = category
@@ -26,5 +27,10 @@ class MealRepository(application: Application) {
     fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
         idLiveData.value = id
         return Transformations.switchMap(idLiveData) { DataAccessStrategyUtils.synchronizedCache(mealDao, it) {foooodService.getMealById(it)} }
+    }
+
+    fun getMealsByName(name: String): LiveData<Resource<List<Meal>>> {
+        nameLiveData.value = name
+        return Transformations.switchMap(nameLiveData) { DataAccessStrategyUtils.synchronizedCache(mealDao, null) {foooodService.getMealsByName(it)} }
     }
 }

@@ -1,11 +1,14 @@
 package com.example.fooood
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Menu
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.fooood.databinding.ActivityMainBinding
+import com.example.fooood.view.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -24,7 +27,8 @@ class MainActivity : AppCompatActivity() {
         this.binding.bottomNavigationView.selectedItemId = R.id.home
         this.binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
-
+                R.id.search -> startActivity(Intent(this, SearchActivity::class.java))
+                R.id.menu -> startActivity(Intent(this, Menu::class.java))
             }
             true
         }

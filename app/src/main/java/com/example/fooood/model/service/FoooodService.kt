@@ -18,6 +18,8 @@ class FoooodService: BaseService() {
         this.api = retrofit.create(IFoooodApi::class.java)
     }
 
+    suspend fun getMealsByName(name: String) = getResource { api.getMealsByName(name) }
+
     suspend fun getMealsByCategory(category: String) = getResource { api.getMealsByCategory(category) }
 
     suspend fun getMealById(id: String) = getResource { api.getMealById(id) }
