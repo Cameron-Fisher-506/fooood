@@ -8,8 +8,8 @@ import com.example.fooood.model.models.Favourite
 @Dao
 interface IFavouriteDao : IBaseDao<Favourite> {
 
-    @Query("SELECT * FROM favourite WHERE meal = :name")
-    suspend fun findByName(name: String): Favourite?
+    @Query("SELECT * FROM favourite WHERE id = :id")
+    suspend fun findById(id: String): Favourite?
 
     @Query("SELECT * FROM favourite")
     fun getAll(): LiveData<List<Favourite>>

@@ -18,22 +18,31 @@ import com.bumptech.glide.request.transition.Transition
 import com.example.fooood.R
 import com.example.fooood.databinding.MealDetailsFragmentBinding
 import com.example.fooood.enum.Status
+import com.example.fooood.model.models.Favourite
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 import com.example.fooood.utils.TextUtils
+import com.example.fooood.view.menu.Favourites.FavouriteViewModel
+import kotlinx.android.synthetic.main.meal_details_fragment.*
 import java.lang.StringBuilder
 
 class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     private lateinit var binding: MealDetailsFragmentBinding
     private lateinit var mealViewModel: MealViewModel
+    private lateinit var favouriteViewModel: FavouriteViewModel
+
+    private var isFavourite: Boolean = false
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         this.binding = MealDetailsFragmentBinding.bind(view)
+
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
+        this.favouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel::class.java)
 
         arguments?.let {
             val meal = MealDetailsFragmentArgs.fromBundle(it).meal
+            favouriteViewModel.findById(meal.id)
             mealViewModel.getMealById(meal.id)
         }
         attachObservers()
@@ -44,12 +53,8 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             when (it.status) {
                 Status.SUCCESS -> {
                     displayMealDetails()
-                    if (it.data != null) {
-                        if (it.data.isNotEmpty()) {
-                            wireUI(it.data.first())
-                        } else {
-                            displayMealErrorTextView()
-                        }
+                    if (it.data != null && it.data.isNotEmpty()) {
+                        wireUI(it.data.first())
                     } else {
                         displayMealErrorTextView()
                     }
@@ -59,6 +64,23 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             }
         }
         mealViewModel.mealLiveData.observe(this, mealObserver)
+
+        val findByIdObserver = Observer<Resource<Favourite>> {
+            when (it.status) {
+                Status.SUCCESS -> {
+                    isFavourite = true
+                    favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    displayMealDetails()
+                }
+                Status.LOADING -> displayMealProgressBar()
+                Status.ERROR -> {
+                    isFavourite = false
+                    favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    displayMealDetails()
+                }
+            }
+        }
+        favouriteViewModel.findByIdLiveData.observe(this, findByIdObserver)
     }
 
     private fun displayMealDetails() {
@@ -68,23 +90,25 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             ingredientsOneTextView.visibility = View.VISIBLE
             ingredientsTwoTextView.visibility = View.VISIBLE
             instructionsTextView.visibility = View.VISIBLE
+            favouriteImageButton.visibility = View.VISIBLE
             mealProgressBar.visibility = View.GONE
             mealErrorTextView.visibility = View.GONE
         }
     }
 
-    private fun hideMealDetials() {
+    private fun hideMealDetails() {
         with (this.binding) {
             mealTextView.visibility = View.GONE
             mealImageView.visibility = View.GONE
             ingredientsOneTextView.visibility = View.GONE
             ingredientsTwoTextView.visibility = View.GONE
             instructionsTextView.visibility = View.GONE
+            favouriteImageButton.visibility = View.GONE
         }
     }
 
     private fun displayMealErrorTextView() {
-        hideMealDetials()
+        hideMealDetails()
         with (this.binding) {
             mealErrorTextView.visibility = View.VISIBLE
             mealProgressBar.visibility = View.GONE
@@ -92,7 +116,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     }
 
     private fun displayMealProgressBar() {
-        hideMealDetials()
+        hideMealDetails()
         with (this.binding) {
             mealErrorTextView.visibility = View.GONE
             mealProgressBar.visibility = View.VISIBLE
@@ -160,6 +184,74 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             ingredientsTwoTextView.text = Html.fromHtml(ingredientsListTwo.toString())
 
             instructionsTextView.text = meal.instructions
+
+            favouriteImageButton.setOnClickListener {
+                val favourite = Favourite().apply {
+                    id = meal.id
+                    this.meal = meal.meal
+                    drinkAlternate = meal.drinkAlternate
+                    category = meal.category
+                    area = meal.area
+                    instructions = meal.instructions
+                    mealThumb = meal.mealThumb
+                    tags = meal.tags
+                    youTube = meal.youTube
+                    ingredientOne = meal.ingredientOne
+                    ingredientTwo = meal.ingredientTwo
+                    ingredientThree = meal.ingredientThree
+                    ingredientFour = meal.ingredientFour
+                    ingredientFive = meal.ingredientFive
+                    ingredientSix = meal.ingredientSix
+                    ingredientSeven = meal.ingredientSeven
+                    ingredientEight = meal.ingredientEight
+                    ingredientNine = meal.ingredientNine
+                    ingredientTen = meal.ingredientTen
+                    ingredientEleven = meal.ingredientEleven
+                    ingredientTwelve = meal.ingredientTwelve
+                    ingredientThirteen = meal.ingredientThirteen
+                    ingredientFourteen = meal.ingredientFourteen
+                    ingredientFifteen = meal.ingredientFifteen
+                    ingredientSixteen = meal.ingredientSixteen
+                    ingredientSeventeen = meal.ingredientSeventeen
+                    ingredientEighteen = meal.ingredientEighteen
+                    ingredientNineteen = meal.ingredientNineteen
+                    ingredientTwenty = meal.ingredientTwenty
+                    measurementOne = meal.measurementOne
+                    measurementTwo = meal.measurementTwo
+                    measurementThree = meal.measurementThree
+                    measurementFour = meal.measurementFour
+                    measurementFive = meal.measurementFive
+                    measurementSix = meal.measurementSix
+                    measurementSeven = meal.measurementSeven
+                    measurementEight = meal.measurementEight
+                    measurementNine = meal.measurementNine
+                    measurementTen = meal.measurementTen
+                    measurementEleven = meal.measurementEleven
+                    measurementTwelve = meal.measurementTwelve
+                    measurementThirteen = meal.measurementThirteen
+                    measurementFourteen = meal.measurementFourteen
+                    measurementFifteen = meal.measurementFifteen
+                    measurementSixteen = meal.measurementSixteen
+                    measurementSeventeen = meal.measurementSeventeen
+                    measurementEighteen = meal.measurementEighteen
+                    measurementNineteen = meal.measurementNineteen
+                    measurementTwenty = meal.measurementTwenty
+                    source = meal.source
+                    imageSource = meal.imageSource
+                    creativeCommonsConfirmed = meal.creativeCommonsConfirmed
+                    dateModified = meal.dateModified
+                    bookId = meal.bookId
+                    timestamp = meal.timestamp
+                }
+
+                if (isFavourite) {
+                    favouriteViewModel.delete(favourite)
+                    favouriteViewModel.findById(favourite.id)
+                } else {
+                    favouriteViewModel.insert(favourite)
+                    favouriteViewModel.findById(favourite.id)
+                }
+            }
         }
     }
 }

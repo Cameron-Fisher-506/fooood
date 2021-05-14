@@ -8,6 +8,6 @@
     <dimen name="large_space">18dp</dimen>
     <dimen name="huge_space">20dp</dimen>
 
-    <!--Sizes-->
-    <dimen name="large">50dp</dimen>
+    <!--Image Sizes-->
+    <dimen name="large">100dp</dimen>
 </resources>

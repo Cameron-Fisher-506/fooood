@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 
 class FavouriteRepository(application: Application) {
     private val favouritesDao = MealDatabase.getDatabase(application).favouriteDao()
-    private val findByValueLiveData by lazy { MutableLiveData<String>() }
+    private val findByIdLiveData by lazy { MutableLiveData<String>() }
 
     fun insert(favourite: Favourite) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -27,8 +27,8 @@ class FavouriteRepository(application: Application) {
         }
     }
 
-    fun findByValue(value: String): LiveData<Resource<Favourite>> {
-        findByValueLiveData.value = value
-        return Transformations.switchMap(findByValueLiveData) { MealDatabase.getResource { favouritesDao.findByName(it) } }
+    fun findById(id: String): LiveData<Resource<Favourite>> {
+        findByIdLiveData.value = id
+        return Transformations.switchMap(findByIdLiveData) { MealDatabase.getResource { favouritesDao.findById(it) } }
     }
 }
