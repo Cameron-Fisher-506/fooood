@@ -72,7 +72,7 @@
 
             <TextView
                 android:id="@+id/ingredientsOneTextView"
-                style="@style/text_normal"
+                style="@style/text_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/tiny_space"
@@ -85,7 +85,7 @@
 
             <TextView
                 android:id="@+id/ingredientsTwoTextView"
-                style="@style/text_normal"
+                style="@style/text_small"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/medium_space"
