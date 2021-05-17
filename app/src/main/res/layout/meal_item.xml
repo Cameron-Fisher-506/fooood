@@ -14,8 +14,8 @@
 
         <ImageView
             android:id="@+id/mealImageView"
-            android:layout_width="@dimen/large"
-            android:layout_height="@dimen/large"
+            android:layout_width="@dimen/large_100dp"
+            android:layout_height="@dimen/large_100dp"
             android:layout_margin="@dimen/tiny_space"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -11,7 +11,10 @@
 
     //Home
     <string name="no_data_found">No data found.</string>
-    
+
     //Search
     <string name="no_meals_found">No meals found.</string>
+
+    //Menu Items
+    <string name="favourites">Favourites</string>
 </resources>

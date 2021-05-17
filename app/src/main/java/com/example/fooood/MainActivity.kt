@@ -8,6 +8,7 @@ import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
 import com.example.fooood.databinding.ActivityMainBinding
+import com.example.fooood.view.menu.MenuActivity
 import com.example.fooood.view.search.SearchActivity
 
 class MainActivity : AppCompatActivity() {
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         this.binding.bottomNavigationView.setOnNavigationItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.search -> startActivity(Intent(this, SearchActivity::class.java))
-                R.id.menu -> startActivity(Intent(this, Menu::class.java))
+                R.id.menu -> startActivity(Intent(this, MenuActivity::class.java))
             }
             true
         }

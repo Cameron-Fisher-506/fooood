@@ -9,5 +9,7 @@
     <dimen name="huge_space">20dp</dimen>
 
     <!--Image Sizes-->
-    <dimen name="large">100dp</dimen>
+    <dimen name="large_100dp">100dp</dimen>
+    <dimen name="medium_50dp">50dp</dimen>
+    <dimen name="small_25dp">25dp</dimen>
 </resources>

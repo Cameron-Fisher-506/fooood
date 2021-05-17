@@ -11,7 +11,7 @@
         android:roundIcon="@drawable/ic_baseline_fastfood_24"
         android:supportsRtl="true"
         android:theme="@style/Theme.Fooood">
-        <activity android:name=".view.menu.MenuActivity"></activity>
+        <activity android:name=".view.menu.MenuActivity" />
         <activity android:name=".view.search.SearchActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>
