@@ -2,6 +2,7 @@ package com.example.fooood.view.menu.Favourites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.fooood.databinding.MealItemBinding
@@ -82,6 +83,9 @@ class FavouriteListAdapter(private val favourites: ArrayList<Favourite>) : Recyc
                 bookId = favourites[position].bookId
                 timestamp = favourites[position].timestamp
             }
+
+            val action = FavouriteFragmentDirections.actionFavouriteFragmentToMealDetailsFragment3(meal)
+            Navigation.findNavController(it).navigate(action)
         }
     }
 

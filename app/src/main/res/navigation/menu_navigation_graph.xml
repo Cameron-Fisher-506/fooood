@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/menuListFragment"
         android:name="com.example.fooood.view.menu.MenuListFragment"
-        android:label="menu_list_fragment"
+        android:label="Menu"
         tools:layout="@layout/menu_list_fragment" >
         <action
             android:id="@+id/action_menuListFragment_to_favouriteFragment"
@@ -17,7 +17,7 @@
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.example.fooood.view.menu.Favourites.FavouriteFragment"
-        android:label="FavouriteFragment" >
+        android:label="Favourites" >
         <action
             android:id="@+id/action_favouriteFragment_to_menuListFragment"
             app:destination="@id/menuListFragment" />
@@ -28,7 +28,7 @@
     <fragment
         android:id="@+id/mealDetailsFragment3"
         android:name="com.example.fooood.view.meal.MealDetailsFragment"
-        android:label="MealDetailsFragment" >
+        android:label="Details" >
         <action
             android:id="@+id/action_mealDetailsFragment3_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />

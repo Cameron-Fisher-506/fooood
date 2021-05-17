@@ -12,5 +12,5 @@ interface IFavouriteDao : IBaseDao<Favourite> {
     suspend fun findById(id: String): Favourite?
 
     @Query("SELECT * FROM favourite")
-    fun getAll(): LiveData<List<Favourite>>
+    fun getAll(): List<Favourite>
 }

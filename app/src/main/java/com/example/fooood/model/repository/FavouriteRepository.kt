@@ -14,6 +14,7 @@ import kotlinx.coroutines.launch
 class FavouriteRepository(application: Application) {
     private val favouritesDao = MealDatabase.getDatabase(application).favouriteDao()
     private val findByIdLiveData by lazy { MutableLiveData<String>() }
+    private val updateLiveData by lazy { MutableLiveData<Boolean>() }
 
     fun insert(favourite: Favourite) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -30,5 +31,10 @@ class FavouriteRepository(application: Application) {
     fun findById(id: String): LiveData<Resource<Favourite>> {
         findByIdLiveData.value = id
         return Transformations.switchMap(findByIdLiveData) { MealDatabase.getResource { favouritesDao.findById(it) } }
+    }
+
+    fun getAll(update: Boolean): LiveData<Resource<List<Favourite>>> {
+        updateLiveData.value = update
+        return Transformations.switchMap(updateLiveData) { MealDatabase.getResource { favouritesDao.getAll() } }
     }
 }
