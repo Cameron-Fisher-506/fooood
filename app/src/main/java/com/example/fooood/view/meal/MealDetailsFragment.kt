@@ -19,7 +19,7 @@ import com.example.fooood.model.models.Favourite
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 import com.example.fooood.utils.TextUtils
-import com.example.fooood.view.menu.Favourites.FavouriteViewModel
+import com.example.fooood.view.menu.favourites.FavouriteViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.meal_details_fragment.*

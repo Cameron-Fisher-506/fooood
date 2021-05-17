@@ -1,4 +1,4 @@
-package com.example.fooood.view.menu.Favourites
+package com.example.fooood.view.menu.favourites
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

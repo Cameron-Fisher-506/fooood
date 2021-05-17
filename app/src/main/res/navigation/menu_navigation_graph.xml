@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
-        android:name="com.example.fooood.view.menu.Favourites.FavouriteFragment"
+        android:name="com.example.fooood.view.menu.favourites.FavouriteFragment"
         android:label="Favourites" >
         <action
             android:id="@+id/action_favouriteFragment_to_menuListFragment"

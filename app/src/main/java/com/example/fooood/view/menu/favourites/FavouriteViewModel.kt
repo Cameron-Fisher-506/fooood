@@ -1,9 +1,8 @@
-package com.example.fooood.view.menu.Favourites
+package com.example.fooood.view.menu.favourites
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.example.fooood.model.models.Favourite
 import com.example.fooood.model.repository.FavouriteRepository
 import com.example.fooood.utils.Resource
