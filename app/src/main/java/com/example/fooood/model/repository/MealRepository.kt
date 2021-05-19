@@ -33,10 +33,10 @@ class MealRepository(application: Application) {
 
     fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
         idLiveData.value = id
-        return Transformations.switchMap(idLiveData) { id ->
+        return Transformations.switchMap(idLiveData) { mealId ->
             DataAccessStrategyUtils.lazyCache(
-                { MealDatabase.getResource { mealDao.getById(id) } } ,
-                { foooodService.getMealById(id) },
+                { MealDatabase.getResource { mealDao.getById(mealId) } } ,
+                { foooodService.getMealById(mealId) },
                 { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
             )
         }
@@ -44,10 +44,10 @@ class MealRepository(application: Application) {
 
     fun getMealsByName(name: String): LiveData<Resource<List<Meal>>> {
         nameLiveData.value = name
-        return Transformations.switchMap(nameLiveData) { name ->
+        return Transformations.switchMap(nameLiveData) { mealName ->
             DataAccessStrategyUtils.lazyCache(
-                { MealDatabase.getResource { mealDao.getAllByValue(name) } },
-                { foooodService.getMealsByName(name) },
+                { MealDatabase.getResource { mealDao.getAllByValue(mealName) } },
+                { foooodService.getMealsByName(mealName) },
                 { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
             )
         }
