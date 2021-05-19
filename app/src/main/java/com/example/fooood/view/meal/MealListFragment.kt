@@ -23,7 +23,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
 
-        this.mealViewModel.getMealsByCategory("Seafood")
+        this.mealViewModel.getMealsByCategory("Dessert")
         wireUI()
         attachObservers()
     }

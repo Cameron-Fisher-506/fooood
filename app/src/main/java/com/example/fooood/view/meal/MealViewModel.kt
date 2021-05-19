@@ -23,6 +23,6 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     }
 
     fun getMealById(id: String) {
-        //mealLiveData = mealRepository.getMealById(id)
+        mealLiveData = mealRepository.getMealById(id)
     }
 }

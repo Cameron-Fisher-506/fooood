@@ -23,31 +23,33 @@ class MealRepository(application: Application) {
     fun getMealsByCategory(category: String): LiveData<Resource<List<Meal>>> {
         categoryLiveData.value = category
         return Transformations.switchMap(categoryLiveData) { mealCategory ->
-            DataAccessStrategyUtils.synchronizedCache(
+            DataAccessStrategyUtils.lazyCache(
                 { MealDatabase.getResource { mealDao.getByCategory(mealCategory) } },
                 { foooodService.getMealsByCategory(mealCategory) },
-                { it.meals?.let { meals -> mealDao.insert(meals) } }
+                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
             )
         }
     }
 
-    /*fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
+    fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
         idLiveData.value = id
-        return Transformations.switchMap(idLiveData) {
-            DataAccessStrategyUtils.synchronizedCache(
-                mealDao,
-                it
-            ) { foooodService.getMealById(it) }
+        return Transformations.switchMap(idLiveData) { id ->
+            DataAccessStrategyUtils.lazyCache(
+                { MealDatabase.getResource { mealDao.getById(id) } } ,
+                { foooodService.getMealById(id) },
+                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
+            )
         }
     }
 
     fun getMealsByName(name: String): LiveData<Resource<List<Meal>>> {
         nameLiveData.value = name
-        return Transformations.switchMap(nameLiveData) {
-            DataAccessStrategyUtils.synchronizedCache(
-                mealDao,
-                null
-            ) { foooodService.getMealsByName(it) }
+        return Transformations.switchMap(nameLiveData) { name ->
+            DataAccessStrategyUtils.lazyCache(
+                { MealDatabase.getResource { mealDao.getAllByValue(name) } },
+                { foooodService.getMealsByName(name) },
+                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
+            )
         }
-    }*/
+    }
 }
