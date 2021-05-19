@@ -13,6 +13,6 @@ class SearchViewModel(application: Application) : AndroidViewModel(application) 
     private val mealRepository = MealRepository(application)
 
     fun getMealsByName(name: String) {
-        //mealsBySearchLiveData = mealRepository.getMealsByName(name)
+        mealsBySearchLiveData = mealRepository.getMealsByName(name)
     }
 }
