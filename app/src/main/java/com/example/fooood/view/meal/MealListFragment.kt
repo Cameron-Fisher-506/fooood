@@ -33,7 +33,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
             when (it.status) {
                 Status.SUCCESS -> {
                     displayRecyclerView()
-                    it.data?.let { data -> this.mealListAdapter.updateMealList(data) }
+                    it.data?.let { data -> if (data.isNotEmpty()) this.mealListAdapter.updateMealList(data) else displayMealErrorTextView() }
                 }
                 Status.LOADING -> { displayMealProgressBar() }
                 Status.ERROR -> { displayMealErrorTextView() }

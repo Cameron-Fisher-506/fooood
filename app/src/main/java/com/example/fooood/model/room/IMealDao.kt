@@ -15,4 +15,7 @@ interface IMealDao : IBaseDao<Meal> {
 
     @Query("SELECT * FROM meal ORDER BY RANDOM() LIMIT 100")
     suspend fun getRandom(): List<Meal>?
+
+    @Query("SELECT * FROM meal WHERE category = :category")
+    suspend fun getByCategory(category: String): List<Meal>?
 }

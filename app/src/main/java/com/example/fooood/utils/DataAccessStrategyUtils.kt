@@ -1,5 +1,6 @@
 package com.example.fooood.utils
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.liveData
 import com.example.fooood.enum.Status
 import com.example.fooood.model.models.BookWithMeals
@@ -10,43 +11,40 @@ import com.example.fooood.model.room.upsert
 import kotlinx.coroutines.Dispatchers
 
 object DataAccessStrategyUtils {
-    inline fun <T> lazyCache(mealDao: IMealDao, value: String, crossinline wsCall: suspend () -> Resource<T>) =
-        liveData<Resource<List<Meal>>>(Dispatchers.IO) {
+    inline fun <A, T> lazyCache(crossinline dbQuery: () -> LiveData<Resource<T>>, crossinline wsCall: suspend () -> Resource<A>, crossinline saveCall: suspend (A) -> Unit) =
+        liveData<Resource<T>>(Dispatchers.IO) {
             emit(Resource.loading())
 
-            val result = mealDao.getAllByValue(value)
-            if (result != null) {
-                emit(Resource.success(result))
-            } else {
-                val response = wsCall.invoke()
-                if (response.status == Status.SUCCESS && response.data != null) {
-                    if (response.data is BookWithMeals) {
-                        val meals = response.data.meals
-                        if (meals != null) {
-                            mealDao.insert(meals)
-                            emit(Resource.success(meals))
-                        } else {
-                            emit(Resource.error("No meals found."))
-                        }
-                    }
-                } else {
-                    emit(Resource.error("No meals found."))
+            val result = dbQuery.invoke()
+            emitSource(result)
+
+            val response = wsCall.invoke()
+            when (response.status) {
+                Status.SUCCESS -> {
+                    response.data?.let { saveCall(it) }
                 }
+                Status.ERROR -> emit(Resource.error(response.message))
+                else -> emit(Resource.error("No data found."))
             }
         }
 
-    inline fun <T> synchronizedCache(mealDao: IMealDao, id: String?, crossinline wsCall: suspend () -> Resource<T>) =
-        liveData<Resource<List<Meal>>>(Dispatchers.IO) {
+    inline fun <A, T> synchronizedCache(crossinline dbQuery: () -> LiveData<Resource<T>>, crossinline wsCall: suspend () -> Resource<A>, crossinline saveCall: suspend (A) -> Unit) =
+        liveData<Resource<T>>(Dispatchers.IO) {
             emit(Resource.loading())
 
-            var result: List<Meal>? = null
-            result = if (id == null) {
-                mealDao.getRandom()
-            } else {
-                mealDao.getById(id)
+            val result = dbQuery.invoke()
+            emitSource(result)
+
+            val response = wsCall.invoke()
+            when (response.status) {
+                Status.SUCCESS -> {
+                    response.data?.let { saveCall(it) }
+                }
+                Status.ERROR -> emit(Resource.error(response.message))
+                else -> emit(Resource.error("No data found."))
             }
 
-            if (result != null && result.isNotEmpty()) {
+            /*if (result != null && result.isNotEmpty()) {
                 var mustUpdate = false
                 for (i in result.indices) {
                     if (DateTimeUtils.differenceInMinutes(result[i].timestamp, DateTimeUtils.getCurrentDateTime()) > DateTimeUtils.ONE_MINUTE) {
@@ -106,6 +104,6 @@ object DataAccessStrategyUtils {
                 } else {
                     emit(Resource.error("No data found."))
                 }
-            }
+            }*/
         }
 }
