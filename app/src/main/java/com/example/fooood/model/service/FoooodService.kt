@@ -24,4 +24,6 @@ class FoooodService: BaseService() {
 
     suspend fun getMealById(id: String) = getResource { api.getMealById(id) }
 
+    suspend fun getCategories() = getResource { api.getCategories() }
+
 }

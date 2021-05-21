@@ -17,6 +17,7 @@ abstract class MealDatabase : RoomDatabase() {
     abstract fun bookDao(): IBookDao
     abstract fun mealDao(): IMealDao
     abstract fun favouriteDao(): IFavouriteDao
+    abstract fun categoryDao(): ICategoryDao
 
     companion object {
         @Volatile

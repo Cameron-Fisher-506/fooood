@@ -1,5 +1,6 @@
 package com.example.fooood.model.service
 
+import com.example.fooood.model.models.BookWithCategories
 import com.example.fooood.model.models.BookWithMeals
 import com.example.fooood.model.models.Meal
 import retrofit2.Response
@@ -21,4 +22,7 @@ interface IFoooodApi {
 
     @GET("lookup.php")
     suspend fun getMealById(@Query("i") i: String): Response<BookWithMeals>
+
+    @GET("categories.php")
+    suspend fun getCategories(): Response<BookWithCategories>
 }
