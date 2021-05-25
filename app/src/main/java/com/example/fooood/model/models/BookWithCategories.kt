@@ -3,7 +3,7 @@ package com.example.fooood.model.models
 import androidx.room.Embedded
 import androidx.room.Relation
 
-class BookWithCategories(
+data class BookWithCategories(
     @Embedded
     val book: Book = Book(),
 
