@@ -46,7 +46,7 @@ class MealRepository(application: Application) {
         nameLiveData.value = name
         return Transformations.switchMap(nameLiveData) { mealName ->
             DataAccessStrategyUtils.lazyCache(
-                { MealDatabase.getResource { mealDao.getAllByValue(mealName) } },
+                { MealDatabase.getResource { mealDao.getAllByName(mealName) } },
                 { foooodService.getMealsByName(mealName) },
                 { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
             )

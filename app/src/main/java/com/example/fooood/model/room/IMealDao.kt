@@ -8,7 +8,7 @@ import com.example.fooood.model.models.Meal
 interface IMealDao : IBaseDao<Meal> {
 
     @Query("SELECT * FROM meal WHERE meal LIKE ('%' || :value || '%')")
-    suspend fun getAllByValue(value: String): List<Meal>?
+    suspend fun getAllByName(value: String): List<Meal>?
 
     @Query("SELECT * FROM meal WHERE id = :id")
     suspend fun getById(id: String): List<Meal>?

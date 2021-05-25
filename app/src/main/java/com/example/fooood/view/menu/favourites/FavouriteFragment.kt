@@ -24,6 +24,7 @@ class FavouriteFragment : Fragment(R.layout.favourite_fragment) {
 
         this.favouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel::class.java)
 
+        favouriteViewModel.getAll(true)
         wireUI()
         attachObservers()
     }

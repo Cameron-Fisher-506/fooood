@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import com.example.fooood.R
 import com.example.fooood.databinding.MealListFragmentBinding
 import com.example.fooood.enum.Status
+import com.example.fooood.model.models.Category
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 
@@ -23,7 +24,8 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
 
-        this.mealViewModel.getMealsByCategory("Dessert")
+        this.mealViewModel.getMealsByName("Prawns")
+        this.mealViewModel.getAllCategories(true)
         wireUI()
         attachObservers()
     }
@@ -41,6 +43,16 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
         }
 
         this.mealViewModel.randomMealsLiveData.observe(this, randomMealObserver)
+
+        val categoriesObserver = Observer<Resource<List<Category>>> {
+            when (it.status) {
+                Status.SUCCESS -> { context?.let { context ->  } }
+                Status.ERROR -> {}
+                Status.LOADING -> {}
+            }
+        }
+
+        this.mealViewModel.categoriesLiveDate.observe(this, categoriesObserver)
     }
 
     private fun displayRecyclerView() {
@@ -75,7 +87,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
             mealSwipeRefreshLayout.setOnRefreshListener {
                 displayMealProgressBar()
-                mealViewModel.getMealsByCategory("Pasta")
+                mealViewModel.getMealsByCategory("Pork")
                 mealSwipeRefreshLayout.isRefreshing = false
             }
         }

@@ -255,7 +255,12 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
             lifecycle.addObserver(youtubePlayerView)
             youtubePlayerView.addYouTubePlayerListener(object : AbstractYouTubePlayerListener() {
                 override fun onReady(youTubePlayer: YouTubePlayer) {
-                    val videoId = meal.youTube?.split("v=")?.get(1) ?: ""
+                    val youtubeLink = meal.youTube
+                    var videoId = ""
+                    if (youtubeLink != null && youtubeLink.isNotEmpty() && youtubeLink.contains("v=")) {
+                        videoId = meal.youTube?.split("v=")?.get(1) ?: ""
+                    }
+
                     youTubePlayer.loadVideo(videoId, 0f)
                 }
             })

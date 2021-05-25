@@ -33,4 +33,8 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
     fun getAllCategories(update: Boolean) {
         categoriesLiveDate = categoryRepository.getAllCategories(update)
     }
+
+    fun getMealsByName(name: String) {
+        this.randomMealsLiveData = this.mealRepository.getMealsByName(name)
+    }
 }
