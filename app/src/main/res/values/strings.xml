@@ -10,6 +10,22 @@
     <string name="dash">--</string>
 
     //Home
+    <string-array name="mealCategories">
+        <item>Beef</item>
+        <item>Chicken</item>
+        <item>Dessert</item>
+        <item>Lamb</item>
+        <item>Miscellaneous</item>
+        <item>Pasta</item>
+        <item>Pork</item>
+        <item>Seafood</item>
+        <item>Side</item>
+        <item>Starter</item>
+        <item>Vegan</item>
+        <item>Vegetarian</item>
+        <item>Breakfast</item>
+        <item>Goat</item>
+    </string-array>
     <string name="no_data_found">No data found.</string>
 
     //Search
@@ -17,4 +33,8 @@
 
     //Menu Items
     <string name="favourites">Favourites</string>
+
+    //Toolbar menu
+    <string name="filter">Filter</string>
+    
 </resources>

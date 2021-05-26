@@ -2,6 +2,8 @@ package com.example.fooood.view.meal
 
 import android.os.Bundle
 import android.view.View
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
@@ -17,6 +19,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
     private lateinit var binding: MealListFragmentBinding
     private lateinit var mealViewModel: MealViewModel
     private lateinit var mealListAdapter: MealListAdapter
+    private val categoryList = mutableListOf<String>()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -46,7 +49,22 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         val categoriesObserver = Observer<Resource<List<Category>>> {
             when (it.status) {
-                Status.SUCCESS -> { context?.let { context ->  } }
+                Status.SUCCESS -> {
+                    it.data?.let { categories ->
+
+                        if (categories.isNotEmpty()) {
+
+                            categories.map { category -> categoryList.add(category.category) }
+
+                            val c = context
+                            if (c != null) {
+                                val mealCategoriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(c, android.R.layout.simple_list_item_1, categoryList)
+                                mealCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                                binding.mealCategorySpinner.adapter = mealCategoriesAdapter
+                            }
+                        }
+                    }
+                }
                 Status.ERROR -> {}
                 Status.LOADING -> {}
             }
@@ -90,6 +108,31 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                 mealViewModel.getMealsByCategory("Pork")
                 mealSwipeRefreshLayout.isRefreshing = false
             }
+
+            context?.let {
+                val mealCategoriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.mealCategories))
+                mealCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                mealCategorySpinner.adapter = mealCategoriesAdapter
+            }
+
+            mealCategorySpinner.onItemSelectedListener = object: AdapterView.OnItemClickListener,
+                AdapterView.OnItemSelectedListener {
+                override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    if (categoryList.isNotEmpty()) {
+                        mealViewModel.getMealsByName(categoryList[position])
+                    }
+                }
+
+                override fun onNothingSelected(parent: AdapterView<*>?) {
+                    TODO("Not yet implemented")
+                }
+
+                override fun onItemClick(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                    TODO("Not yet implemented")
+                }
+
+            }
+
         }
     }
 }
