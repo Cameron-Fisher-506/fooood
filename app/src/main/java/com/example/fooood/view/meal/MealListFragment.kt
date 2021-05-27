@@ -27,7 +27,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
 
-        this.mealViewModel.getMealsByName("Prawns")
+        this.mealViewModel.getMealsByCategory("Beef")
         this.mealViewModel.getAllCategories(true)
         wireUI()
         attachObservers()
@@ -53,7 +53,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                     it.data?.let { categories ->
 
                         if (categories.isNotEmpty()) {
-
+                            categoryList.clear()
                             categories.map { category -> categoryList.add(category.category) }
 
                             val c = context
@@ -105,11 +105,12 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
             mealSwipeRefreshLayout.setOnRefreshListener {
                 displayMealProgressBar()
-                mealViewModel.getMealsByCategory("Pork")
+                mealViewModel.getMealsByCategory("Beef")
                 mealSwipeRefreshLayout.isRefreshing = false
             }
 
             context?.let {
+                categoryList.clear()
                 val mealCategoriesAdapter: ArrayAdapter<String> = ArrayAdapter<String>(it, android.R.layout.simple_list_item_1, resources.getStringArray(R.array.mealCategories))
                 mealCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                 mealCategorySpinner.adapter = mealCategoriesAdapter
@@ -119,7 +120,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (categoryList.isNotEmpty()) {
-                        mealViewModel.getMealsByName(categoryList[position])
+                        mealViewModel.getMealsByCategory(categoryList[position])
                     }
                 }
 

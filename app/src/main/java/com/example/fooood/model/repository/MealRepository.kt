@@ -26,7 +26,7 @@ class MealRepository(application: Application) {
             DataAccessStrategyUtils.lazyCache(
                 { MealDatabase.getResource { mealDao.getByCategory(mealCategory) } },
                 { foooodService.getMealsByCategory(mealCategory) },
-                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
+                {  }
             )
         }
     }
