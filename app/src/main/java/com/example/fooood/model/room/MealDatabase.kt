@@ -11,6 +11,7 @@ import com.example.fooood.model.models.Favourite
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
 import kotlinx.coroutines.Dispatchers
+import java.lang.Exception
 
 @Database(entities = [Book::class, Meal::class, Favourite::class, Category::class], version = 1, exportSchema = false)
 abstract class MealDatabase : RoomDatabase() {
@@ -41,7 +42,7 @@ abstract class MealDatabase : RoomDatabase() {
             }
         }
 
-        inline fun <T> getResource(crossinline daoCall: suspend () -> T?) =
+        inline fun <T> getLiveDataResource(crossinline daoCall: suspend () -> T?) =
             liveData<Resource<T>>(Dispatchers.IO) {
                 emit(Resource.loading())
 
@@ -52,5 +53,18 @@ abstract class MealDatabase : RoomDatabase() {
                     emit(Resource.error("Not cached."))
                 }
             }
+
+
+        suspend inline fun <T> getResource(crossinline daoCall: suspend () -> T?): Resource<T> {
+            try {
+                val response = daoCall.invoke()
+                if (response != null) {
+                    return Resource.success(response)
+                }
+                return Resource.error("Not found in cache.")
+            } catch (e: Exception) {
+                return Resource.error(e.message ?: e.toString())
+            }
+        }
     }
 }

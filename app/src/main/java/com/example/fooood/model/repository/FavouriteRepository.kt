@@ -30,11 +30,11 @@ class FavouriteRepository(application: Application) {
 
     fun findById(id: String): LiveData<Resource<Favourite>> {
         findByIdLiveData.value = id
-        return Transformations.switchMap(findByIdLiveData) { MealDatabase.getResource { favouritesDao.findById(it) } }
+        return Transformations.switchMap(findByIdLiveData) { MealDatabase.getLiveDataResource { favouritesDao.findById(it) } }
     }
 
     fun getAll(update: Boolean): LiveData<Resource<List<Favourite>>> {
         updateLiveData.value = update
-        return Transformations.switchMap(updateLiveData) { MealDatabase.getResource { favouritesDao.getAll() } }
+        return Transformations.switchMap(updateLiveData) { MealDatabase.getLiveDataResource { favouritesDao.getAll() } }
     }
 }
