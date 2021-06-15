@@ -36,5 +36,5 @@
     <fragment
         android:id="@+id/appFragment"
         android:name="com.example.fooood.view.menu.app.AppFragment"
-        android:label="AppFragment" />
+        android:label="App Settings" />
 </navigation>
