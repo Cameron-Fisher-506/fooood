@@ -39,7 +39,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/favourites"
-                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintBottom_toTopOf="@+id/favouritesDividerView"
                 app:layout_constraintEnd_toStartOf="@+id/favouritesArrowImageView"
                 app:layout_constraintStart_toEndOf="@+id/favouritesImageView"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -50,16 +50,73 @@
                 android:layout_height="@dimen/small_25dp"
                 android:layout_margin="@dimen/medium_space"
                 android:src="@drawable/ic_baseline_arrow_forward_24"
-                app:layout_constraintBottom_toTopOf="@+id/view"
+                app:layout_constraintBottom_toTopOf="@+id/favouritesDividerView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <View
-                android:id="@+id/view"
+                android:id="@+id/favouritesDividerView"
                 style="@style/horizontalDivider"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/favouritesImageView" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/appMaterialCardView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/small_space"
+        app:cardElevation="@dimen/small_space"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/favouritesMaterialCardView">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/appConstraintLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/appImageView"
+                android:layout_width="@dimen/medium_50dp"
+                android:layout_height="@dimen/medium_50dp"
+                android:layout_margin="@dimen/medium_space"
+                android:src="@drawable/ic_baseline_app_settings_alt_24"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/appTextView"
+                style="@style/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/app"
+                app:layout_constraintBottom_toTopOf="@+id/appDividerView"
+                app:layout_constraintEnd_toStartOf="@+id/appArrowImageView"
+                app:layout_constraintStart_toEndOf="@+id/appImageView"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/appArrowImageView"
+                android:layout_width="@dimen/small_25dp"
+                android:layout_height="@dimen/small_25dp"
+                android:layout_margin="@dimen/medium_space"
+                android:src="@drawable/ic_baseline_arrow_forward_24"
+                app:layout_constraintBottom_toTopOf="@+id/appDividerView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <View
+                android:id="@+id/appDividerView"
+                style="@style/horizontalDivider"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/appImageView" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>
 </androidx.constraintlayout.widget.ConstraintLayout>

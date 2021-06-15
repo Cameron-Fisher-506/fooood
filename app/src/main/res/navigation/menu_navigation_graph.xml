@@ -13,14 +13,14 @@
         <action
             android:id="@+id/action_menuListFragment_to_favouriteFragment"
             app:destination="@id/favouriteFragment" />
+        <action
+            android:id="@+id/action_menuListFragment_to_appFragment"
+            app:destination="@id/appFragment" />
     </fragment>
     <fragment
         android:id="@+id/favouriteFragment"
         android:name="com.example.fooood.view.menu.favourites.FavouriteFragment"
         android:label="Favourites" >
-        <action
-            android:id="@+id/action_favouriteFragment_to_menuListFragment"
-            app:destination="@id/menuListFragment" />
         <action
             android:id="@+id/action_favouriteFragment_to_mealDetailsFragment3"
             app:destination="@id/mealDetailsFragment3" />
@@ -29,11 +29,12 @@
         android:id="@+id/mealDetailsFragment3"
         android:name="com.example.fooood.view.meal.MealDetailsFragment"
         android:label="Details" >
-        <action
-            android:id="@+id/action_mealDetailsFragment3_to_favouriteFragment"
-            app:destination="@id/favouriteFragment" />
         <argument
             android:name="meal"
             app:argType="com.example.fooood.model.models.Meal" />
     </fragment>
+    <fragment
+        android:id="@+id/appFragment"
+        android:name="com.example.fooood.view.menu.app.AppFragment"
+        android:label="AppFragment" />
 </navigation>

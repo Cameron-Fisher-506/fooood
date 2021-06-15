@@ -33,6 +33,12 @@
 
     //Menu Items
     <string name="favourites">Favourites</string>
+    <string name="app">App</string>
+
+    //Menu Item App:
+    <string name="dark_mode">Dark Mode</string>
+    <string name="on">On</string>
+    <string name="off">Off</string>
 
     //Toolbar menu
     <string name="filter">Filter</string>

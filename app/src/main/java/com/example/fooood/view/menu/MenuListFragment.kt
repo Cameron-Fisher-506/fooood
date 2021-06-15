@@ -22,5 +22,10 @@ class MenuListFragment : Fragment(R.layout.menu_list_fragment) {
             val action = MenuListFragmentDirections.actionMenuListFragmentToFavouriteFragment()
             Navigation.findNavController(it).navigate(action)
         }
+
+        this.binding.appMaterialCardView.setOnClickListener {
+            val action = MenuListFragmentDirections.actionMenuListFragmentToAppFragment()
+            Navigation.findNavController(it).navigate(action)
+        }
     }
 }
