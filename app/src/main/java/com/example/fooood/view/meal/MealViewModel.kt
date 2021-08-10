@@ -3,6 +3,8 @@ package com.example.fooood.view.meal
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
+import androidx.lifecycle.liveData
+import kotlinx.coroutines.Dispatchers
 import com.example.fooood.model.models.Category
 import com.example.fooood.model.models.Meal
 import com.example.fooood.model.repository.BookRepository
@@ -22,19 +24,19 @@ class MealViewModel(application: Application): AndroidViewModel(application) {
         BookRepository(application)
     }
 
-    fun getMealsByCategory(category: String) {
-        this.randomMealsLiveData = this.mealRepository.getMealsByCategory(category)
+    fun fetchMealsByCategory(category: String) {
+        this.randomMealsLiveData = liveData(Dispatchers.IO) { emit(mealRepository.fetchMealsByCategory(category)) }
     }
 
-    fun getMealById(id: String) {
-        mealLiveData = mealRepository.getMealById(id)
+    fun fetchMealById(id: String) {
+        this.mealLiveData = liveData(Dispatchers.IO) { emit(mealRepository.fetchMealById(id)) }
     }
 
-    fun getAllCategories(update: Boolean) {
-        categoriesLiveDate = categoryRepository.getAllCategories(update)
+    fun fetchAllCategories() {
+        this.categoriesLiveDate = liveData(Dispatchers.IO) { emit(categoryRepository.fetchAllCategories()) }
     }
 
-    fun getMealsByName(name: String) {
-        this.randomMealsLiveData = this.mealRepository.getMealsByName(name)
+    fun fetchMealsByName(name: String) {
+        this.randomMealsLiveData = liveData(Dispatchers.IO) { emit(mealRepository.fetchMealsByName(name)) }
     }
 }

@@ -27,7 +27,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         this.mealViewModel = ViewModelProviders.of(this).get(MealViewModel::class.java)
 
-        this.mealViewModel.getAllCategories(true)
+        this.mealViewModel.fetchAllCategories()
         attachCategoryObserver()
 
         wireUI()
@@ -53,7 +53,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
     }
 
     private fun attachCategoryObserver() {
-        val categoriesObserver = Observer<Resource<List<Category>>> {
+        this.mealViewModel.categoriesLiveDate.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     it.data?.let { categories ->
@@ -68,7 +68,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                                 mealCategoriesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
                                 binding.mealCategorySpinner.adapter = mealCategoriesAdapter
                             }
-                            this.mealViewModel.getMealsByName(categories.first().category)
+                            this.mealViewModel.fetchMealsByName(categories.first().category)
                             attachRandomMealObserver()
                         }
                     }
@@ -76,9 +76,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                 Status.LOADING -> { displayMealProgressBar() }
                 Status.ERROR -> { displayMealErrorTextView() }
             }
-        }
-
-        this.mealViewModel.categoriesLiveDate.observe(this, categoriesObserver)
+        })
     }
 
     private fun displayRecyclerView() {
@@ -113,7 +111,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
             mealSwipeRefreshLayout.setOnRefreshListener {
                 displayMealProgressBar()
-                mealViewModel.getMealsByCategory("Beef")
+                mealViewModel.fetchMealsByCategory("Beef")
                 mealSwipeRefreshLayout.isRefreshing = false
             }
 
@@ -128,7 +126,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                 AdapterView.OnItemSelectedListener {
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                     if (categoryList.isNotEmpty()) {
-                        mealViewModel.getMealsByCategory(categoryList[position])
+                        mealViewModel.fetchMealsByCategory(categoryList[position])
                         attachRandomMealObserver()
                     }
                 }

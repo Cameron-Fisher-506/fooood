@@ -17,7 +17,6 @@ import kotlinx.coroutines.launch
 class CategoryRepository(private val application: Application) {
     private val foooodService: FoooodService = FoooodService()
     private val categoryDao = MealDatabase.getDatabase(application).categoryDao()
-    private val updateLiveData by lazy { MutableLiveData<Boolean>() }
 
     fun insert(categories: List<Category>) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -25,16 +24,12 @@ class CategoryRepository(private val application: Application) {
         }
     }
 
-    fun getAllCategories(update: Boolean): LiveData<Resource<List<Category>>>{
-        updateLiveData.value = update
-        return Transformations.switchMap(updateLiveData) { _ ->
-            DataAccessStrategyUtils.synchronizedCache(
-                application,
-                { MealDatabase.getResource { categoryDao.getAll() } },
-                { foooodService.getCategories() },
-                { it.categories?.let { categories -> categoryDao.insert(categories) } }
-            )
-
-        }
+    suspend fun fetchAllCategories(): Resource<List<Category>>{
+        return DataAccessStrategyUtils.synchronizedCache(
+            application,
+            { MealDatabase.getResource { categoryDao.getAll() } },
+            { foooodService.getCategories() },
+            { it.categories?.let { categories -> categoryDao.insert(categories) } }
+        )
     }
 }

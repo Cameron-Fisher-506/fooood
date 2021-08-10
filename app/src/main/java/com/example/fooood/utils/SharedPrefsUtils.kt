@@ -10,10 +10,10 @@ object SharedPrefsUtils {
 
     const val LAST_REQUEST_TIME: String = "LAST_REQUEST_TIME"
 
-    fun save(context: Context, sharedPrefName: String) {
-        val sharedPreferences: SharedPreferences = context.getSharedPreferences(sharedPrefName, 0)
+    fun save(context: Context, key: String, value: String) {
+        val sharedPreferences: SharedPreferences = context.getSharedPreferences(key, 0)
         val editor = sharedPreferences.edit()
-        editor.putString(sharedPrefName, DateTimeUtils.getCurrentDateTime(DateTimeUtils.DASHED_PATTERN_YYYY_MM_DD_HH_MM_SS))
+        editor.putString(key, value)
         editor.apply()
     }
 

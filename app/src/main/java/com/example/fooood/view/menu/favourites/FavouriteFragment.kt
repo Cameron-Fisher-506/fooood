@@ -24,13 +24,13 @@ class FavouriteFragment : Fragment(R.layout.favourite_fragment) {
 
         this.favouriteViewModel = ViewModelProviders.of(this).get(FavouriteViewModel::class.java)
 
-        favouriteViewModel.getAll(true)
+        favouriteViewModel.fetchAll()
         wireUI()
         attachObservers()
     }
 
     private fun attachObservers() {
-        val getAllObserver = Observer<Resource<List<Favourite>>> {
+        this.favouriteViewModel.getAllLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     if (it.data != null) {
@@ -43,8 +43,7 @@ class FavouriteFragment : Fragment(R.layout.favourite_fragment) {
                 Status.ERROR -> showErrorMessageTextView()
                 Status.LOADING -> showFavouriteProgressBar()
             }
-        }
-        this.favouriteViewModel.getAllLiveData.observe(this, getAllObserver)
+        })
     }
 
     private fun showFavouriteRecyclerView() {
@@ -77,7 +76,7 @@ class FavouriteFragment : Fragment(R.layout.favourite_fragment) {
         this.binding.favouriteRecyclerView.adapter = this.favouriteListAdapter
 
         this.binding.favouriteSwipeRefreshLayout.setOnRefreshListener {
-            favouriteViewModel.getAll(true)
+            favouriteViewModel.fetchAll()
             favouriteSwipeRefreshLayout.isRefreshing = false
         }
     }

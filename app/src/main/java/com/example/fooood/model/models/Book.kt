@@ -5,7 +5,8 @@ import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(indices = [Index(value = ["id"], unique = true)])
-data class Book(
+class Book(
     @PrimaryKey(autoGenerate = false)
     var id: Int = 1,
-    var name: String = "") : BaseModel()
+    var name: String = ""
+) : BaseModel()

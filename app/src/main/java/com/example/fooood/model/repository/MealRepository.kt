@@ -15,44 +15,31 @@ import com.example.fooood.utils.Resource
 class MealRepository(private val application: Application) {
     private val foooodService: FoooodService = FoooodService()
     private val mealDao: IMealDao = MealDatabase.getDatabase(application).mealDao()
-
-    private val categoryLiveData by lazy { MutableLiveData<String>() }
-    private val idLiveData by lazy { MutableLiveData<String>() }
-    private val nameLiveData by lazy { MutableLiveData<String>() }
     
-    fun getMealsByCategory(category: String): LiveData<Resource<List<Meal>>> {
-        categoryLiveData.value = category
-        return Transformations.switchMap(categoryLiveData) { mealCategory ->
-            DataAccessStrategyUtils.synchronizedCache(
-                application,
-                { MealDatabase.getResource { mealDao.getByCategory(mealCategory) } },
-                { foooodService.getMealsByCategory(mealCategory) },
-                {  }
-            )
-        }
+    suspend fun fetchMealsByCategory(category: String): Resource<List<Meal>> {
+        return DataAccessStrategyUtils.synchronizedCache(
+            application,
+            { MealDatabase.getResource { mealDao.getByCategory(category) } },
+            { foooodService.getMealsByCategory(category) },
+            {  }
+        )
     }
 
-    fun getMealById(id: String): LiveData<Resource<List<Meal>>> {
-        idLiveData.value = id
-        return Transformations.switchMap(idLiveData) { mealId ->
-            DataAccessStrategyUtils.synchronizedCache(
-                application,
-                { MealDatabase.getResource { mealDao.getById(mealId) } } ,
-                { foooodService.getMealById(mealId) },
-                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
-            )
-        }
+    suspend fun fetchMealById(id: String): Resource<List<Meal>> {
+        return DataAccessStrategyUtils.synchronizedCache(
+            application,
+            { MealDatabase.getResource { mealDao.getById(id) } } ,
+            { foooodService.getMealById(id) },
+            { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
+        )
     }
 
-    fun getMealsByName(name: String): LiveData<Resource<List<Meal>>> {
-        nameLiveData.value = name
-        return Transformations.switchMap(nameLiveData) { mealName ->
-            DataAccessStrategyUtils.synchronizedCache(
-                application,
-                { MealDatabase.getResource { mealDao.getAllByName(mealName) } },
-                { foooodService.getMealsByName(mealName) },
-                { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
-            )
-        }
+    suspend fun fetchMealsByName(name: String): Resource<List<Meal>> {
+        return DataAccessStrategyUtils.synchronizedCache(
+            application,
+            { MealDatabase.getResource { mealDao.getAllByName(name) } },
+            { foooodService.getMealsByName(name) },
+            { it.meals?.let { meals -> mealDao.upsert(meals, mealDao) } }
+        )
     }
 }

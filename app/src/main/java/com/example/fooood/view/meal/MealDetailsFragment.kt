@@ -22,8 +22,6 @@ import com.example.fooood.utils.TextUtils
 import com.example.fooood.view.menu.favourites.FavouriteViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
-import kotlinx.android.synthetic.main.meal_details_fragment.*
-
 
 class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
     private lateinit var binding: MealDetailsFragmentBinding
@@ -42,13 +40,13 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
         arguments?.let {
             val meal = MealDetailsFragmentArgs.fromBundle(it).meal
             favouriteViewModel.findById(meal.id)
-            mealViewModel.getMealById(meal.id)
+            mealViewModel.fetchMealById(meal.id)
         }
         attachObservers()
     }
 
     private fun attachObservers() {
-        val mealObserver = Observer<Resource<List<Meal>>> {
+        mealViewModel.mealLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     displayMealDetails()
@@ -61,25 +59,23 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
                 Status.ERROR -> { displayMealErrorTextView() }
                 Status.LOADING -> { displayMealProgressBar() }
             }
-        }
-        mealViewModel.mealLiveData.observe(this, mealObserver)
+        })
 
-        val findByIdObserver = Observer<Resource<Favourite>> {
+        favouriteViewModel.findByIdLiveData.observe(viewLifecycleOwner, {
             when (it.status) {
                 Status.SUCCESS -> {
                     isFavourite = true
-                    favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_24)
+                    binding.favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_24)
                     displayMealDetails()
                 }
                 Status.LOADING -> displayMealProgressBar()
                 Status.ERROR -> {
                     isFavourite = false
-                    favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                    binding.favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)
                     displayMealDetails()
                 }
             }
-        }
-        favouriteViewModel.findByIdLiveData.observe(this, findByIdObserver)
+        })
     }
 
     private fun displayMealDetails() {

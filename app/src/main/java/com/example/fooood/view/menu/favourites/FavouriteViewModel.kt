@@ -13,7 +13,7 @@ class FavouriteViewModel(application: Application): AndroidViewModel(application
     lateinit var getAllLiveData: LiveData<Resource<List<Favourite>>>
 
     init {
-        getAll(true)
+        fetchAll()
     }
 
     fun insert(favourite: Favourite) {
@@ -28,7 +28,7 @@ class FavouriteViewModel(application: Application): AndroidViewModel(application
         findByIdLiveData = favouriteRepository.findById(id)
     }
 
-    fun getAll(update: Boolean) {
-        getAllLiveData = favouriteRepository.getAll(update)
+    fun fetchAll() {
+        getAllLiveData = favouriteRepository.fetchAll()
     }
 }
