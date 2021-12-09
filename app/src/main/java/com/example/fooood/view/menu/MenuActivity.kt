@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
-import com.example.fooood.MainActivity
+import com.example.fooood.view.meal.MainActivity
 import com.example.fooood.R
 import com.example.fooood.databinding.MenuActivityBinding
 import com.example.fooood.view.search.SearchActivity

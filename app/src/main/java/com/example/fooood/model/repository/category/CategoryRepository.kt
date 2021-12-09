@@ -1,12 +1,8 @@
-package com.example.fooood.model.repository
+package com.example.fooood.model.repository.category
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.example.fooood.model.models.Category
 import com.example.fooood.model.room.MealDatabase
-import com.example.fooood.model.room.upsert
 import com.example.fooood.model.service.FoooodService
 import com.example.fooood.utils.DataAccessStrategyUtils
 import com.example.fooood.utils.Resource

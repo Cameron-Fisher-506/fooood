@@ -23,7 +23,7 @@ import com.example.fooood.view.menu.favourites.FavouriteViewModel
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 
-class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
+class MealDetailsFragment : MealBaseFragment(R.layout.meal_details_fragment) {
     private lateinit var binding: MealDetailsFragmentBinding
     private lateinit var mealViewModel: MealViewModel
     private lateinit var favouriteViewModel: FavouriteViewModel
@@ -47,6 +47,7 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
 
     private fun attachObservers() {
         mealViewModel.mealLiveData.observe(viewLifecycleOwner, {
+            mealActivity.dismissProgressBar()
             when (it.status) {
                 Status.SUCCESS -> {
                     displayMealDetails()
@@ -57,18 +58,19 @@ class MealDetailsFragment : Fragment(R.layout.meal_details_fragment) {
                     }
                 }
                 Status.ERROR -> { displayMealErrorTextView() }
-                Status.LOADING -> { displayMealProgressBar() }
+                Status.LOADING -> {  }
             }
         })
 
         favouriteViewModel.findByIdLiveData.observe(viewLifecycleOwner, {
+            mealActivity.dismissProgressBar()
             when (it.status) {
                 Status.SUCCESS -> {
                     isFavourite = true
                     binding.favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_24)
                     displayMealDetails()
                 }
-                Status.LOADING -> displayMealProgressBar()
+                Status.LOADING -> {}
                 Status.ERROR -> {
                     isFavourite = false
                     binding.favouriteImageButton.setImageResource(R.drawable.ic_baseline_favorite_border_24)

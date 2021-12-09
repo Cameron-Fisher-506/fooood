@@ -1,10 +1,8 @@
-package com.example.fooood.model.repository
+package com.example.fooood.model.repository.meal
 
 import android.app.Application
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.example.fooood.model.models.Meal
+import com.example.fooood.model.repository.BaseRepository
 import com.example.fooood.model.room.IMealDao
 import com.example.fooood.model.room.MealDatabase
 import com.example.fooood.model.room.upsert
@@ -12,8 +10,7 @@ import com.example.fooood.model.service.FoooodService
 import com.example.fooood.utils.DataAccessStrategyUtils
 import com.example.fooood.utils.Resource
 
-class MealRepository(private val application: Application) {
-    private val foooodService: FoooodService = FoooodService()
+class MealRepository(private val application: Application) : BaseRepository() {
     private val mealDao: IMealDao = MealDatabase.getDatabase(application).mealDao()
     
     suspend fun fetchMealsByCategory(category: String): Resource<List<Meal>> {

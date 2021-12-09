@@ -1,4 +1,4 @@
-package com.example.fooood.model.repository
+package com.example.fooood.model.repository.favourite
 
 import android.app.Application
 import androidx.lifecycle.LiveData

@@ -14,8 +14,9 @@ import com.example.fooood.enum.Status
 import com.example.fooood.model.models.Category
 import com.example.fooood.model.models.Meal
 import com.example.fooood.utils.Resource
+import kotlinx.android.synthetic.main.progress_bar.*
 
-class MealListFragment: Fragment(R.layout.meal_list_fragment) {
+class MealListFragment: MealBaseFragment(R.layout.meal_list_fragment) {
     private lateinit var binding: MealListFragmentBinding
     private lateinit var mealViewModel: MealViewModel
     private lateinit var mealListAdapter: MealListAdapter
@@ -29,12 +30,12 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
 
         this.mealViewModel.fetchAllCategories()
         attachCategoryObserver()
-
         wireUI()
     }
 
     private fun attachRandomMealObserver() {
         this.mealViewModel.randomMealsLiveData.observe(viewLifecycleOwner, {
+            mealActivity.dismissProgressBar()
             when (it.status) {
                 Status.SUCCESS -> {
                     displayRecyclerView()
@@ -46,7 +47,7 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                         displayMealErrorTextView()
                     }
                 }
-                Status.LOADING -> { displayMealProgressBar() }
+                Status.LOADING -> {  }
                 Status.ERROR -> { displayMealErrorTextView() }
             }
         })
@@ -73,8 +74,11 @@ class MealListFragment: Fragment(R.layout.meal_list_fragment) {
                         }
                     }
                 }
-                Status.LOADING -> { displayMealProgressBar() }
-                Status.ERROR -> { displayMealErrorTextView() }
+                Status.LOADING -> { }
+                Status.ERROR -> {
+                    mealActivity.dismissProgressBar()
+                    displayMealErrorTextView()
+                }
             }
         })
     }

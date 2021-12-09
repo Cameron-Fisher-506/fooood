@@ -1,17 +1,18 @@
-package com.example.fooood
+package com.example.fooood.view.meal
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
 import androidx.navigation.NavController
 import androidx.navigation.Navigation
 import androidx.navigation.ui.NavigationUI
+import com.example.fooood.R
 import com.example.fooood.databinding.ActivityMainBinding
+import com.example.fooood.view.BaseActivity
 import com.example.fooood.view.menu.MenuActivity
 import com.example.fooood.view.search.SearchActivity
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var navController: NavController
 

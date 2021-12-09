@@ -1,4 +1,4 @@
-package com.example.fooood.model.repository
+package com.example.fooood.model.repository.book
 
 import android.app.Application
 import com.example.fooood.model.models.Book
